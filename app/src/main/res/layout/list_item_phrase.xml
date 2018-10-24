@@ -2,21 +2,51 @@
 <android.support.constraint.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:clickable="true"
-    android:focusable="true"
-    android:foreground="?attr/selectableItemBackground"
     android:layout_width="match_parent"
-    android:layout_height="96dp"
-    android:tag="@string/tag_view_background">
+    android:layout_height="96dp">
 
-    <android.support.v7.widget.AppCompatTextView
-        android:id="@+id/text"
-        android:text="@string/app_name"
-        android:gravity="center_vertical"
-        android:padding="16dp"
+    <android.support.constraint.ConstraintLayout
+        android:id="@+id/backgroundView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:tag="@string/tag_text_secondary"
-        app:autoSizeTextType="uniform" />
+        android:background="@color/colourRed">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="16dp"
+            android:text="@string/list_action_delete"
+            android:textColor="@android:color/primary_text_dark"
+            android:fontFamily="@font/manrope_sb"
+            android:drawableEnd="@drawable/ic_delete_outline_white_24dp"
+            android:drawablePadding="8dp"
+            android:gravity="center_vertical"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"/>
+    </android.support.constraint.ConstraintLayout>
+
+    <android.support.constraint.ConstraintLayout
+        android:id="@+id/foregroundView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:clickable="true"
+        android:focusable="true"
+        android:visibility="visible"
+        android:background="@android:color/background_light"
+        android:foreground="?attr/selectableItemBackground"
+        android:tag="@string/tag_view_background">
+
+        <android.support.v7.widget.AppCompatTextView
+            android:id="@+id/text"
+            android:text="@string/app_name"
+            android:gravity="center_vertical"
+            android:padding="16dp"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:tag="@string/tag_text_secondary"
+            app:autoSizeTextType="uniform" />
+
+    </android.support.constraint.ConstraintLayout>
 
 </android.support.constraint.ConstraintLayout>

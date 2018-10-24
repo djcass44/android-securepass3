@@ -2,6 +2,7 @@
     <string name="app_name">SecurePass3</string>
 
     <string name="list_empty">No items</string>
+    <string name="list_action_delete">Delete</string>
 
     <string name="adder_title_range">Length range</string>
     <string name="adder_title_type">Algorithm</string>

@@ -22,10 +22,10 @@ import android.content.ClipboardManager
 import android.content.Context
 import android.os.Bundle
 import android.support.design.widget.FloatingActionButton
+import android.support.v7.widget.DefaultItemAnimator
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.support.v7.widget.helper.ItemTouchHelper
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -35,6 +35,7 @@ import com.django.securepass3.R
 import com.django.securepass3.algorithm.Golf
 import com.django.securepass3.algorithm.Henrik
 import com.django.securepass3.algorithm.Length
+import com.django.securepass3.extendedcore.RecyclerItemTouchHelper
 import com.django.securepass3.extendedcore.ThemedAppCompatActivity
 import com.django.securepass3.theme.ThemeChoice
 import com.django.securepass3.util.ThemeUtil
@@ -70,19 +71,15 @@ class MainActivity : ThemedAppCompatActivity() {
             }
         })
         recyclerView.layoutManager = LinearLayoutManager(this)
+        recyclerView.itemAnimator = DefaultItemAnimator()
         recyclerView.adapter = adapter
-        val itemTouchHelperHallback = object : ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT) {
-            override fun onMove(p0: RecyclerView, p1: RecyclerView.ViewHolder, p2: RecyclerView.ViewHolder): Boolean {
-                return false
+        val itemTouchHelperCallback = RecyclerItemTouchHelper(0, ItemTouchHelper.LEFT, object : RecyclerItemTouchHelper.RecyclerItemTouchHelperListener {
+            override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int, position: Int) {
+                adapter.removeItem(position)
             }
 
-            override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
-                Log.d(javaClass.name, "swiped ${viewHolder.adapterPosition}")
-                adapter.removeItem(viewHolder.adapterPosition)
-            }
-
-        }
-        ItemTouchHelper(itemTouchHelperHallback).attachToRecyclerView(recyclerView)
+        })
+        ItemTouchHelper(itemTouchHelperCallback).attachToRecyclerView(recyclerView)
 
         fab = findViewById(R.id.fab)
         fab.setOnClickListener {
@@ -159,6 +156,8 @@ class PhraseAdapter(private val context: Context, private val items: ArrayList<S
 
     class PhraseViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
         var textTitle: TextView = itemView.findViewById(R.id.text)
+        var foregroundView: View = itemView.findViewById(R.id.foregroundView)
+        var backgroundView: View = itemView.findViewById(R.id.backgroundView)
     }
 
     fun addItem(item: String) {
