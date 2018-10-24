@@ -24,6 +24,8 @@ import android.os.Bundle
 import android.support.design.widget.FloatingActionButton
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
+import android.support.v7.widget.helper.ItemTouchHelper
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -69,6 +71,18 @@ class MainActivity : ThemedAppCompatActivity() {
         })
         recyclerView.layoutManager = LinearLayoutManager(this)
         recyclerView.adapter = adapter
+        val itemTouchHelperHallback = object : ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT) {
+            override fun onMove(p0: RecyclerView, p1: RecyclerView.ViewHolder, p2: RecyclerView.ViewHolder): Boolean {
+                return false
+            }
+
+            override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
+                Log.d(javaClass.name, "swiped ${viewHolder.adapterPosition}")
+                adapter.removeItem(viewHolder.adapterPosition)
+            }
+
+        }
+        ItemTouchHelper(itemTouchHelperHallback).attachToRecyclerView(recyclerView)
 
         fab = findViewById(R.id.fab)
         fab.setOnClickListener {
@@ -150,6 +164,10 @@ class PhraseAdapter(private val context: Context, private val items: ArrayList<S
     fun addItem(item: String) {
         items.add(0, item)
         notifyItemInserted(0)
+    }
+    fun removeItem(position: Int) {
+        items.removeAt(position)
+        notifyItemRemoved(position)
     }
 
     interface OnSizeRequestedListener {
