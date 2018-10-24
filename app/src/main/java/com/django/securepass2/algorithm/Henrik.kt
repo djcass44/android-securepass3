@@ -23,12 +23,10 @@ import java.security.SecureRandom
 /**
  * Based off https://stackoverflow.com/a/636170
  */
-class Henrik: Algorithm {
+class Henrik: BaseAlgorithm() {
     private val vowels: CharArray = "aeiou".toCharArray()
     private val consonants: CharArray = "bcdfghjklmnpqrstvwxyz".toCharArray()
     private val pairs = arrayListOf<String>()
-
-    var length = Length.DEFAULT
 
     init {
         for (v in vowels) {
