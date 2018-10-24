@@ -46,18 +46,23 @@ class MainActivity : ThemedAppCompatActivity() {
         recyclerView = findViewById(R.id.recyclerView)
 
         val items = arrayListOf("test1", "test2", "test3")
-        adapter = PhraseAdapter(this, items)
+        adapter = PhraseAdapter(this, items, object : PhraseAdapter.OnSizeRequestedListener {
+            override fun onSizeRequested(size: Int) {
+                textNoItems.visibility = if (size > 0) View.GONE else View.VISIBLE
+            }
+        })
         recyclerView.layoutManager = LinearLayoutManager(this)
         recyclerView.adapter = adapter
     }
 }
-class PhraseAdapter(val context: Context, val items: ArrayList<String>): RecyclerView.Adapter<PhraseAdapter.PhraseViewHolder>() {
+class PhraseAdapter(val context: Context, val items: ArrayList<String>, private val onSizeRequestedListener: OnSizeRequestedListener?): RecyclerView.Adapter<PhraseAdapter.PhraseViewHolder>() {
 
     override fun onCreateViewHolder(viewGroup: ViewGroup, p1: Int): PhraseViewHolder {
         return PhraseViewHolder(LayoutInflater.from(viewGroup.context).inflate(R.layout.list_item_phrase, viewGroup, false))
     }
 
     override fun getItemCount(): Int {
+        onSizeRequestedListener?.onSizeRequested(items.size)
         return items.size
     }
 
@@ -70,5 +75,9 @@ class PhraseAdapter(val context: Context, val items: ArrayList<String>): Recycle
 
     class PhraseViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
         var textTitle: TextView = itemView.findViewById(R.id.text)
+    }
+
+    interface OnSizeRequestedListener {
+        fun onSizeRequested(size: Int)
     }
 }
