@@ -1,3 +1,10 @@
 <resources>
-    <string name="app_name">SecurePass2</string>
+    <string name="app_name">SecurePass3</string>
+
+    <string name="list_empty">No items</string>
+
+    <string name="tag_text_primary">text_primary</string>
+    <string name="tag_text_secondary">text_secondary</string>
+    <string name="tag_text_tertiary">text_tertiary</string>
+    <string name="tag_view_background">view_background</string>
 </resources>

@@ -15,16 +15,19 @@
  *
  */
 
-package com.django.securepass2.activity
+package com.django.securepass3.activity
 
-import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
-import com.django.securepass2.R
+import com.django.securepass3.R
+import com.django.securepass3.extendedcore.ThemedAppCompatActivity
+import com.django.securepass3.theme.ThemeChoice
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : ThemedAppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+        ThemeChoice.theme = ThemeChoice.Theme.DARK
     }
 }
