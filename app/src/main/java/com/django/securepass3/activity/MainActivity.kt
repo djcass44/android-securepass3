@@ -29,7 +29,11 @@ import android.widget.ArrayAdapter
 import android.widget.Button
 import android.widget.Spinner
 import android.widget.TextView
+import com.appyvet.materialrangebar.RangeBar
 import com.django.securepass3.R
+import com.django.securepass3.algorithm.Golf
+import com.django.securepass3.algorithm.Henrik
+import com.django.securepass3.algorithm.Length
 import com.django.securepass3.extendedcore.ThemedAppCompatActivity
 import com.django.securepass3.theme.ThemeChoice
 import com.django.securepass3.util.ThemeUtil
@@ -46,6 +50,7 @@ class MainActivity : ThemedAppCompatActivity() {
     private lateinit var buttonAddOk: Button
     private lateinit var buttonAddCancel: Button
 
+    private lateinit var rangeBar: RangeBar
     private lateinit var spinnerType: Spinner
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -72,13 +77,46 @@ class MainActivity : ThemedAppCompatActivity() {
         }
         fabRevealLayout = findViewById(R.id.addLayout)
         buttonAddOk = findViewById(R.id.buttonAddOk)
+        buttonAddOk.setOnClickListener {
+            generate()
+        }
         buttonAddCancel = findViewById(R.id.buttonAddCancel)
         buttonAddCancel.setOnClickListener {
             FabTransformation.with(fab).transformFrom(fabRevealLayout)
         }
 
+        rangeBar = findViewById(R.id.addRangeBar)
+        rangeBar.tickStart = Length.DEFAULT2.min.toFloat()
+        rangeBar.tickEnd = Length.DEFAULT2.max.toFloat()
+
         spinnerType = findViewById(R.id.adder_type_spinner)
         spinnerType.adapter = ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, arrayOf("Henrik", "Golf"))
+//        spinnerType.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+//            override fun onNothingSelected(parent: AdapterView<*>?) {
+//
+//            }
+//
+//            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+//                when (position) {
+//                    0 -> {
+//                        rangeBar.tickStart =
+//                    }
+//                }
+//            }
+//        }
+    }
+    private fun generate() {
+        val min = rangeBar.tickStart
+        val max = rangeBar.tickEnd
+
+        val length = Length(min.toInt(), max.toInt())
+        val algorithm = when (spinnerType.selectedItemPosition) {
+            1 -> Golf()
+            else -> Henrik()
+        }
+        algorithm.length = length
+        adapter.addItem(algorithm.getResult())
+        recyclerView.scrollToPosition(0)
     }
 }
 class PhraseAdapter(private val context: Context, private val items: ArrayList<String>, private val onSizeRequestedListener: OnSizeRequestedListener?): RecyclerView.Adapter<PhraseAdapter.PhraseViewHolder>() {
@@ -101,6 +139,11 @@ class PhraseAdapter(private val context: Context, private val items: ArrayList<S
 
     class PhraseViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
         var textTitle: TextView = itemView.findViewById(R.id.text)
+    }
+
+    fun addItem(item: String) {
+        items.add(0, item)
+        notifyItemInserted(0)
     }
 
     interface OnSizeRequestedListener {

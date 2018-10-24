@@ -24,5 +24,6 @@ class Length(val min: Int, val max: Int) {
     companion object {
         val WINDOWS = Length(12, 24)
         val DEFAULT = Length(16, 32)
+        val DEFAULT2 = Length(8, 64)
     }
 }
