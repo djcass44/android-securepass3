@@ -17,9 +17,9 @@
 
 package com.django.securepass2.algorithm;
 
-public class TestHenrik extends TestAlgorithm<Henrik> {
+public class TestGolf extends TestAlgorithm<Golf> {
     @Override
-    Henrik getObject() {
-        return new Henrik();
+    Golf getObject() {
+        return new Golf();
     }
 }
