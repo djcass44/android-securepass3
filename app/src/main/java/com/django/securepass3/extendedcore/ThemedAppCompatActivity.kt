@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import android.widget.TextView
 import com.django.securepass3.R
 import com.django.securepass3.theme.ThemeChoice
+import com.django.securepass3.util.ThemeUtil
 
 @SuppressLint("Registered")
 open class ThemedAppCompatActivity: AppCompatActivity() {
@@ -47,5 +48,6 @@ open class ThemedAppCompatActivity: AppCompatActivity() {
                 }
             }
         }
+        ThemeUtil.updateSystemUI(this, parentLayout)
     }
 }

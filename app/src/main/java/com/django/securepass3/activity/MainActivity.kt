@@ -18,16 +18,20 @@
 package com.django.securepass3.activity
 
 import android.os.Bundle
+import android.widget.TextView
 import com.django.securepass3.R
 import com.django.securepass3.extendedcore.ThemedAppCompatActivity
 import com.django.securepass3.theme.ThemeChoice
 
 class MainActivity : ThemedAppCompatActivity() {
+    private lateinit var textNoItems: TextView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        ThemeChoice.theme = ThemeChoice.Theme.DARK
+        ThemeChoice.theme = ThemeChoice.Theme.LIGHT
+
+        textNoItems = findViewById(R.id.textEmpty)
     }
 }
