@@ -15,21 +15,37 @@
  *
  */
 
-package com.django.securepass2.algorithm
+package com.django.securepass3.algorithm
 
-import java.lang.StringBuilder
 import java.security.SecureRandom
 
-class Golf: BaseAlgorithm() {
+/**
+ * Based off https://stackoverflow.com/a/636170
+ */
+class Henrik: BaseAlgorithm() {
+    private val vowels: CharArray = "aeiou".toCharArray()
+    private val consonants: CharArray = "bcdfghjklmnpqrstvwxyz".toCharArray()
+    private val pairs = arrayListOf<String>()
+
+    init {
+        for (v in vowels) {
+            for (c in consonants) {
+                pairs.add("" + v + c)
+            }
+        }
+    }
+
     override fun getResult(): String {
         val random = SecureRandom()
-        var num = random.nextInt(length.max - length.min) + length.min
+        val num = ((random.nextInt(length.max - length.min) + length.min) / 2)
         val builder = StringBuilder()
-        while (--num > 0) {
-            val t = if (num.rem(2) == 0) "aeiouy" else "bcdfghjklmnpqrstvwxz"
-            val pos = random.nextInt(6 + (num.rem(2) * 14))
-            builder.append(t[pos])
+        for (i in 0 until num) {
+            builder.append(pairs[random.nextInt(pairs.size - 1)])
         }
+        val s5 = random.nextBoolean()
+        if(s5)
+            builder.deleteCharAt(builder.lastIndex)
         return builder.toString()
     }
+
 }

@@ -15,7 +15,7 @@
  *
  */
 
-package com.django.securepass2.algorithm;
+package com.django.securepass3.algorithm;
 
 import org.junit.Test;
 

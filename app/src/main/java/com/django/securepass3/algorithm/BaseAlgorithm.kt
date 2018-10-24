@@ -15,14 +15,12 @@
  *
  */
 
-package com.django.securepass2.algorithm
+package com.django.securepass3.algorithm
 
-interface Algorithm {
-    fun getResult(): String
-}
-class Length(val min: Int, val max: Int) {
-    companion object {
-        val WINDOWS = Length(12, 24)
-        val DEFAULT = Length(16, 32)
+open class BaseAlgorithm: Algorithm {
+    var length = Length.DEFAULT
+
+    override fun getResult(): String {
+        throw NotImplementedError()
     }
 }

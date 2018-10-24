@@ -15,12 +15,20 @@
  *
  */
 
-package com.django.securepass2.algorithm
+package com.django.securepass3.algorithm
 
-open class BaseAlgorithm: Algorithm {
-    var length = Length.DEFAULT
+import java.security.SecureRandom
 
+class Golf: BaseAlgorithm() {
     override fun getResult(): String {
-        throw NotImplementedError()
+        val random = SecureRandom()
+        var num = random.nextInt(length.max - length.min) + length.min
+        val builder = StringBuilder()
+        while (--num > 0) {
+            val t = if (num.rem(2) == 0) "aeiouy" else "bcdfghjklmnpqrstvwxz"
+            val pos = random.nextInt(6 + (num.rem(2) * 14))
+            builder.append(t[pos])
+        }
+        return builder.toString()
     }
 }

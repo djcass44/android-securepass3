@@ -15,11 +15,14 @@
  *
  */
 
-package com.django.securepass2.algorithm;
+package com.django.securepass3.algorithm
 
-public class TestGolf extends TestAlgorithm<Golf> {
-    @Override
-    Golf getObject() {
-        return new Golf();
+interface Algorithm {
+    fun getResult(): String
+}
+class Length(val min: Int, val max: Int) {
+    companion object {
+        val WINDOWS = Length(12, 24)
+        val DEFAULT = Length(16, 32)
     }
 }
