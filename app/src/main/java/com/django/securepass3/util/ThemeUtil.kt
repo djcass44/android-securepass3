@@ -1,8 +1,12 @@
 package com.django.securepass3.util
 
 import android.app.Activity
+import android.content.Context
 import android.support.v4.content.ContextCompat
 import android.view.View
+import android.view.ViewGroup
+import android.widget.TextView
+import com.django.securepass3.R
 import com.django.securepass3.theme.SystemUtils
 import com.django.securepass3.theme.ThemeChoice
 
@@ -29,6 +33,36 @@ class ThemeUtil {
                 }
             }
             view.systemUiVisibility = uiVisibility
+        }
+        fun applyTheme(context: Context, parent: View) {
+            val parentLayout = parent as ViewGroup
+            val views = arrayListOf<View>()
+            for (i in 0 until parentLayout.childCount) {
+                views.add(parentLayout.getChildAt(i))
+            }
+            views.add(parentLayout)
+            for (i in 0 until views.size) {
+                val view = views[i]
+                when (view) {
+                    is TextView -> {
+                        view.setTextColor(ContextCompat.getColor(context, when (view.tag) {
+                            context.getString(R.string.tag_text_secondary) -> {
+                                if (ThemeChoice.isDark(context)) android.R.color.secondary_text_dark else android.R.color.secondary_text_light
+                            }
+                            context.getString(R.string.tag_text_tertiary) -> {
+                                if (ThemeChoice.isDark(context)) android.R.color.tertiary_text_dark else android.R.color.tertiary_text_light
+                            }
+                            else -> {
+                                if (ThemeChoice.isDark(context)) android.R.color.primary_text_dark else android.R.color.primary_text_light
+                            }
+                        }))
+                    }
+                    else -> {
+                        if(view.tag == context.getString(R.string.tag_view_background))
+                            view.setBackgroundColor(ContextCompat.getColor(context, if(ThemeChoice.isDark(context)) android.R.color.background_dark else android.R.color.background_light))
+                    }
+                }
+            }
         }
     }
 }
