@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:clickable="true"
+    android:focusable="true"
+    android:foreground="?attr/selectableItemBackground"
+    android:layout_width="match_parent"
+    android:layout_height="96dp"
+    android:tag="@string/tag_view_background">
+
+    <android.support.v7.widget.AppCompatTextView
+        android:id="@+id/text"
+        android:text="@string/app_name"
+        android:gravity="center_vertical"
+        android:padding="16dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:tag="@string/tag_text_secondary"
+        app:autoSizeTextType="uniform" />
+
+</android.support.constraint.ConstraintLayout>
