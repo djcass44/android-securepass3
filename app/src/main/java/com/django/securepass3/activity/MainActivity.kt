@@ -155,7 +155,7 @@ class PhraseAdapter(private val context: Context, private val items: ArrayList<S
     override fun onBindViewHolder(holder: PhraseViewHolder, position: Int) {
         val item = items[position]
         holder.textTitle.text = item
-        holder.itemView.setOnLongClickListener {
+        holder.foregroundView.setOnLongClickListener {
             val clipboard = context.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
             val clip = ClipData.newPlainText(context.getString(R.string.app_name), item)
             clipboard.primaryClip = clip
