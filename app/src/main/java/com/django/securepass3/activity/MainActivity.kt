@@ -22,6 +22,7 @@ import android.content.ClipboardManager
 import android.content.Context
 import android.os.Bundle
 import android.support.design.widget.FloatingActionButton
+import android.support.design.widget.Snackbar
 import android.support.v7.widget.DefaultItemAnimator
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
@@ -75,7 +76,18 @@ class MainActivity : ThemedAppCompatActivity() {
         recyclerView.adapter = adapter
         val itemTouchHelperCallback = RecyclerItemTouchHelper(0, ItemTouchHelper.LEFT, object : RecyclerItemTouchHelper.RecyclerItemTouchHelperListener {
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int, position: Int) {
-                adapter.removeItem(position)
+                if(viewHolder is PhraseAdapter.PhraseViewHolder) {
+                    val item = adapter.getItem(viewHolder.adapterPosition)
+                    val deletedPosition = viewHolder.adapterPosition
+                    adapter.removeItem(viewHolder.adapterPosition)
+
+                    val snackbar = Snackbar.make(recyclerView, "Item removed!", Snackbar.LENGTH_LONG)
+                    snackbar.setAction("Undo", View.OnClickListener {
+                        adapter.restoreItem(deletedPosition, item)
+                        return@OnClickListener
+                    })
+                    snackbar.show()
+                }
             }
 
         })
@@ -167,6 +179,13 @@ class PhraseAdapter(private val context: Context, private val items: ArrayList<S
     fun removeItem(position: Int) {
         items.removeAt(position)
         notifyItemRemoved(position)
+    }
+    fun restoreItem(position: Int, item: String) {
+        items.add(position, item)
+        notifyItemInserted(position)
+    }
+    fun getItem(position: Int): String {
+        return items[position]
     }
 
     interface OnSizeRequestedListener {
