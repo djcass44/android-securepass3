@@ -9,6 +9,8 @@
     <string name="button_generate">Generate</string>
     <string name="button_close">Close</string>
 
+    <string name="toast_copy">Text copied!</string>
+
     <string name="tag_text_primary">text_primary</string>
     <string name="tag_text_secondary">text_secondary</string>
     <string name="tag_text_tertiary">text_tertiary</string>

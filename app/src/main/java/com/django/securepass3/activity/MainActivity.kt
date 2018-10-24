@@ -17,6 +17,8 @@
 
 package com.django.securepass3.activity
 
+import android.content.ClipData
+import android.content.ClipboardManager
 import android.content.Context
 import android.os.Bundle
 import android.support.design.widget.FloatingActionButton
@@ -25,10 +27,7 @@ import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ArrayAdapter
-import android.widget.Button
-import android.widget.Spinner
-import android.widget.TextView
+import android.widget.*
 import com.appyvet.materialrangebar.RangeBar
 import com.django.securepass3.R
 import com.django.securepass3.algorithm.Golf
@@ -133,6 +132,13 @@ class PhraseAdapter(private val context: Context, private val items: ArrayList<S
     override fun onBindViewHolder(holder: PhraseViewHolder, position: Int) {
         val item = items[position]
         holder.textTitle.text = item
+        holder.itemView.setOnLongClickListener {
+            val clipboard = context.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
+            val clip = ClipData.newPlainText(context.getString(R.string.app_name), item)
+            clipboard.primaryClip = clip
+            Toast.makeText(context, context.getString(R.string.toast_copy), Toast.LENGTH_SHORT).show()
+            return@setOnLongClickListener true
+        }
 
         ThemeUtil.applyTheme(context, holder.itemView)
     }
