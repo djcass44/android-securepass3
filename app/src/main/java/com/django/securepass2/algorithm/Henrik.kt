@@ -28,6 +28,8 @@ class Henrik: Algorithm {
     private val consonants: CharArray = "bcdfghjklmnpqrstvwxyz".toCharArray()
     private val pairs = arrayListOf<String>()
 
+    var length = Length.DEFAULT
+
     init {
         for (v in vowels) {
             for (c in consonants) {
@@ -38,7 +40,7 @@ class Henrik: Algorithm {
 
     override fun getResult(): String {
         val random = SecureRandom()
-        val num = random.nextInt(3) + 3
+        val num = ((random.nextInt(length.max - length.min) + length.min) / 2)
         val builder = StringBuilder()
         for (i in 0 until num) {
             builder.append(pairs[random.nextInt(pairs.size - 1)])

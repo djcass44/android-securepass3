@@ -27,4 +27,17 @@ public class TestHenrik {
         System.out.println(result);
         assert !result.isEmpty();
     }
+    @Test
+    public void validateAlgorithmLength() {
+        Henrik henrik = new Henrik();
+        assert henrik.getLength() == Length.Companion.getDEFAULT();
+
+        henrik.setLength(Length.Companion.getWINDOWS());
+        assert henrik.getLength() == Length.Companion.getWINDOWS();
+        String result = henrik.getResult();
+        System.out.println(result);
+        System.out.println(result.length());
+        assert result.length() >= Length.Companion.getWINDOWS().getMin();
+        assert result.length() <= Length.Companion.getWINDOWS().getMax();
+    }
 }
