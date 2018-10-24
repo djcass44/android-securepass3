@@ -37,25 +37,26 @@ class ThemeUtil {
         fun applyTheme(context: Context, parent: View) {
             val parentLayout = parent as ViewGroup
             val views = arrayListOf<View>()
-            for (i in 0 until parentLayout.childCount) {
-                views.add(parentLayout.getChildAt(i))
-            }
+            views.addAll(addChildren(parentLayout))
             views.add(parentLayout)
             for (i in 0 until views.size) {
                 val view = views[i]
                 when (view) {
                     is TextView -> {
-                        view.setTextColor(ContextCompat.getColor(context, when (view.tag) {
+                        view.setTextColor(when (view.tag) {
+                            context.getString(R.string.tag_text_primary) -> {
+                                ContextCompat.getColor(context, if (ThemeChoice.isDark(context)) android.R.color.primary_text_dark else android.R.color.primary_text_light)
+                            }
                             context.getString(R.string.tag_text_secondary) -> {
-                                if (ThemeChoice.isDark(context)) android.R.color.secondary_text_dark else android.R.color.secondary_text_light
+                                ContextCompat.getColor(context, if (ThemeChoice.isDark(context)) android.R.color.secondary_text_dark else android.R.color.secondary_text_light)
                             }
                             context.getString(R.string.tag_text_tertiary) -> {
-                                if (ThemeChoice.isDark(context)) android.R.color.tertiary_text_dark else android.R.color.tertiary_text_light
+                                ContextCompat.getColor(context, if (ThemeChoice.isDark(context)) android.R.color.tertiary_text_dark else android.R.color.tertiary_text_light)
                             }
                             else -> {
-                                if (ThemeChoice.isDark(context)) android.R.color.primary_text_dark else android.R.color.primary_text_light
+                                view.currentTextColor
                             }
-                        }))
+                        })
                     }
                     else -> {
                         if(view.tag == context.getString(R.string.tag_view_background))
@@ -63,6 +64,18 @@ class ThemeUtil {
                     }
                 }
             }
+        }
+
+        private fun addChildren(viewGroup: ViewGroup): ArrayList<View> {
+            val views = arrayListOf<View>()
+            for (i in 0 until viewGroup.childCount) {
+                val child = viewGroup.getChildAt(i)
+                views.add(child)
+                if(child is ViewGroup) {
+                    views.addAll(addChildren(child))
+                }
+            }
+            return views
         }
     }
 }
