@@ -33,6 +33,7 @@ import android.view.ViewGroup
 import android.widget.*
 import com.appyvet.materialrangebar.RangeBar
 import com.django.securepass3.R
+import com.django.securepass3.algorithm.BaseAlgorithm
 import com.django.securepass3.algorithm.Golf
 import com.django.securepass3.algorithm.Henrik
 import com.django.securepass3.algorithm.Length
@@ -128,11 +129,11 @@ class MainActivity : ThemedAppCompatActivity() {
 //        }
     }
     private fun generate() {
-        val min = rangeBar.tickStart
-        val max = rangeBar.tickEnd
+        val min = rangeBar.leftIndex
+        val max = rangeBar.rightIndex
 
-        val length = Length(min.toInt(), max.toInt())
-        val algorithm = when (spinnerType.selectedItemPosition) {
+        val length = Length(8 + min, 8 + max)
+        val algorithm: BaseAlgorithm = when (spinnerType.selectedItemPosition) {
             1 -> Golf()
             else -> Henrik()
         }
