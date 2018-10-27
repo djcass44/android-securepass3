@@ -75,6 +75,7 @@ class MainActivity : ThemedAppCompatActivity() {
         recyclerView.layoutManager = LinearLayoutManager(this)
         recyclerView.itemAnimator = DefaultItemAnimator()
         recyclerView.adapter = adapter
+        val context = this // Cache context to be used in sub-classes
         val itemTouchHelperCallback = RecyclerItemTouchHelper(0, ItemTouchHelper.LEFT, object : RecyclerItemTouchHelper.RecyclerItemTouchHelperListener {
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int, position: Int) {
                 if(viewHolder is PhraseAdapter.PhraseViewHolder) {
@@ -83,6 +84,7 @@ class MainActivity : ThemedAppCompatActivity() {
                     adapter.removeItem(viewHolder.adapterPosition)
 
                     val snackbar = Snackbar.make(recyclerView, "Item removed!", Snackbar.LENGTH_LONG)
+                    ThemeUtil.applyTheme(context, snackbar.view, force = true)
                     snackbar.setAction("Undo", View.OnClickListener {
                         adapter.restoreItem(deletedPosition, item)
                         return@OnClickListener

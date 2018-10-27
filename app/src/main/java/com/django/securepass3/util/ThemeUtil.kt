@@ -35,6 +35,9 @@ class ThemeUtil {
             view.systemUiVisibility = uiVisibility
         }
         fun applyTheme(context: Context, parent: View) {
+            applyTheme(context, parent, false)
+        }
+        fun applyTheme(context: Context, parent: View, force: Boolean) {
             val parentLayout = parent as ViewGroup
             val views = arrayListOf<View>()
             views.addAll(addChildren(parentLayout))
@@ -57,9 +60,11 @@ class ThemeUtil {
                                 view.currentTextColor
                             }
                         })
+                        if(force)
+                            view.setTextColor(ContextCompat.getColor(context, if (ThemeChoice.isDark(context)) android.R.color.primary_text_dark else android.R.color.primary_text_light))
                     }
                     else -> {
-                        if(view.tag == context.getString(R.string.tag_view_background))
+                        if(view.tag == context.getString(R.string.tag_view_background) || force)
                             view.setBackgroundColor(ContextCompat.getColor(context, if(ThemeChoice.isDark(context)) android.R.color.background_dark else android.R.color.background_light))
                     }
                 }
