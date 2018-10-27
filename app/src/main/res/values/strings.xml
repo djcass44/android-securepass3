@@ -1,6 +1,8 @@
 <resources>
     <string name="app_name">SecurePass3</string>
 
+    <string name="activity_title_settings">Settings</string>
+
     <string name="list_empty">No items</string>
     <string name="list_action_delete">Delete</string>
 

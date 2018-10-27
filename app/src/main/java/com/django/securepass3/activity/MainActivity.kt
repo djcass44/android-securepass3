@@ -20,6 +20,7 @@ package com.django.securepass3.activity
 import android.content.ClipData
 import android.content.ClipboardManager
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.support.design.widget.FloatingActionButton
 import android.support.design.widget.Snackbar
@@ -56,6 +57,8 @@ class MainActivity : ThemedAppCompatActivity() {
 
     private lateinit var rangeBar: RangeBar
     private lateinit var spinnerType: Spinner
+
+    private lateinit var buttonSettings: ImageButton
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -129,6 +132,11 @@ class MainActivity : ThemedAppCompatActivity() {
 //                }
 //            }
 //        }
+
+        buttonSettings = findViewById(R.id.buttonSettings)
+        buttonSettings.setOnClickListener {
+            startActivity(Intent(this, SettingsActivity::class.java))
+        }
     }
     private fun generate() {
         val min = rangeBar.leftIndex
